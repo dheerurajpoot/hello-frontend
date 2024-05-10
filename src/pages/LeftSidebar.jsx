@@ -10,16 +10,14 @@ import { HiShoppingBag } from "react-icons/hi2";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
-import { useGetProfile } from "../hooks/useGetProfile";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from "../utils/constant";
-import { getMyProfile, getOtherUsers, getUser } from "../redux/userSlice";
 import { toast } from "react-toastify";
 
 const LeftSidebar = () => {
-	const { user, profile } = useSelector((store) => store.user);
-	useGetProfile(user?._id);
+	const user = useSelector((state) => state.auth?.user?.user);
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -29,9 +27,6 @@ const LeftSidebar = () => {
 			if (res.data.success) {
 				toast.success(res.data.message);
 			}
-			dispatch(getUser(null));
-			dispatch(getOtherUsers(null));
-			dispatch(getMyProfile(null));
 			navigate("/login");
 		} catch (error) {
 			toast.error(error.response.data.message);
@@ -61,11 +56,6 @@ const LeftSidebar = () => {
 							</div>
 						</Link>
 					</div>
-					{/* <div>
-            <div div className="close-menu">
-              <IoClose className='sidebar-menu-icon' size={35} />
-            </div>
-          </div> */}
 				</div>
 				<div className='left-sidebar-menu'>
 					<Link
