@@ -20,16 +20,13 @@ export const createPost = createAsyncThunk(
 		}
 	}
 );
-export const getUserPosts = createAsyncThunk(
-	"user/posts",
-	async (id, thunkAPI) => {
-		try {
-			return await postService.getUserPosts(id);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
-		}
+export const getUserPosts = createAsyncThunk("user/posts", async (thunkAPI) => {
+	try {
+		return await postService.getUserPosts();
+	} catch (error) {
+		return thunkAPI.rejectWithValue(error);
 	}
-);
+});
 
 export const postNewSlice = createSlice({
 	name: "posts",

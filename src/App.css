@@ -411,6 +411,39 @@ input[type=file]::file-selector-button:hover {
   background: #fff;
 }
 
+.dropdown-container{
+  position: relative;
+  background: #fff;
+}
+.dot-menu{
+  background: #fff;
+  cursor: pointer;
+}
+.dropdown-menu a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-size: 18px;
+}
+
+.dropdown-menu a div {
+  background: #fff;
+  padding: 2px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 10px;
+  padding: 10px 20px;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.post-follow{
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--secondary-color);
+  background: #fff;
+  cursor: pointer;
+}
 /* Login Form Start here  */
 
 .login-form{

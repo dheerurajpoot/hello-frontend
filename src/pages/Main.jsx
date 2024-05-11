@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import Avatar from "react-avatar";
 import Post from "../components/Post";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { POST_API_END_POINT } from "../utils/constant";
-import { setRefresh } from "../redux/postSlice";
-import { toast } from "react-toastify";
 import { createPost, getUserPosts } from "../redux/PostNewSlice";
 
 const Main = () => {
@@ -20,10 +16,13 @@ const Main = () => {
 
 	// get all user posts
 	useEffect(() => {
-		dispatch(getUserPosts(user?._id));
+		dispatch(getUserPosts());
 	}, [dispatch, user?._id]);
 
-	const userposts = useSelector((state) => state?.posts?.posts);
+	const allPosts = useSelector((state) => state?.posts?.posts);
+	const userposts = allPosts
+		.slice()
+		.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
 	return (
 		<>

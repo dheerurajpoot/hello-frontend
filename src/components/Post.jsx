@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Avatar from "react-avatar";
 import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
@@ -10,8 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setRefresh } from "../redux/postSlice";
 import { postTiming } from "../utils/constant";
 import { toast } from "react-toastify";
+import { CiMenuKebab } from "react-icons/ci";
 
 const Post = ({ post }) => {
+	const dispatch = useDispatch();
 	const user = useSelector((state) => state?.auth?.user?.user);
 
 	const likeHandler = async (id) => {
@@ -44,7 +46,7 @@ const Post = ({ post }) => {
 			}
 			dispatch(setRefresh());
 		} catch (error) {
-			toast.error(error.response.data.message);
+			toast.error("Something went wrong!");
 			console.log(error);
 		}
 	};
@@ -63,6 +65,30 @@ const Post = ({ post }) => {
 		} else {
 			alert("Sharing is not supported in this browser.");
 		}
+	};
+
+	const [isOpen, setIsOpen] = useState(false);
+	const dropdownRef = useRef(null);
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target)
+			) {
+				setIsOpen(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
+
+	const toggleMenu = () => {
+		setIsOpen(!isOpen);
 	};
 
 	return (
@@ -90,12 +116,30 @@ const Post = ({ post }) => {
 
 						{/* delete post functionality here */}
 
-						{user?._id === post?.userID && (
+						{user?._id === post?.userID &&
+						user?._id === post?.userID ? (
 							<div
-								onClick={() => deletePostHandler(post?._id)}
-								className='delete-post'>
-								<button>Delete</button>
+								className='dropdown-container'
+								ref={dropdownRef}>
+								<CiMenuKebab
+									className='dot-menu'
+									size={30}
+									onClick={toggleMenu}
+								/>
+								{isOpen && (
+									<div className='dropdown-menu'>
+										<a
+											href='#'
+											onClick={() =>
+												deletePostHandler(post?._id)
+											}>
+											Delete
+										</a>
+									</div>
+								)}
 							</div>
+						) : (
+							<span className='post-follow'>Follow+</span>
 						)}
 					</div>
 

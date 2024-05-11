@@ -19,14 +19,11 @@ const createPost = async (data) => {
 		throw error;
 	}
 };
-const getUserPosts = async (id) => {
+const getUserPosts = async () => {
 	try {
-		const response = await axios.get(
-			`${POST_API_END_POINT}/allposts/${id}`,
-			{
-				withCredentials: true,
-			}
-		);
+		const response = await axios.get(`${POST_API_END_POINT}/posts`, {
+			withCredentials: true,
+		});
 		return response.data.posts;
 	} catch (error) {
 		console.error("Error in getting user posts :", error);
