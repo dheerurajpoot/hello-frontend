@@ -6,10 +6,14 @@
 }
 .container{
   padding: 0 6rem;
+  margin: 0 auto;
+  max-width: 120rem;
 }
 
 /* ------------Header Section Start Here ---------- */
-
+.header-section{
+  background: #fff;
+}
 .header{
   height: 5rem;
   background-color: #fff;
@@ -74,8 +78,7 @@
 .main-container{
   display: flex;
   justify-content: space-around;
-  gap: 2rem;
-  max-width: 120rem;
+  gap: 4rem;
 }
 
 /* ------------Left Sidebar Section start Here ---------- */
@@ -230,6 +233,10 @@ input[type=file]::file-selector-button:hover {
 .right-sidebar::-webkit-scrollbar{
   display: none;
 }
+.suggested-name{
+  text-decoration: none;
+  color: #000;
+}
 .request-profile h2{
   text-transform: capitalize;
 }
@@ -250,7 +257,7 @@ input[type=file]::file-selector-button:hover {
   margin: 0rem 2rem;
 }
 .friend-request h3{
-  padding: 1rem 2rem
+  padding: 1rem 0;
 }
 .request-profile{
   background: #fff;
@@ -773,6 +780,7 @@ hr {
   }
   .header{
     padding: 0 1rem;
+    margin: 0 20px;
   }
 
   .right-sidebar{
@@ -797,6 +805,14 @@ hr {
     padding: .5rem 0;
     border-radius: 5rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .hello-drawer{
+    margin-top: 30px;
+  }
+  .drawer-header{
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+    background: #fff;
   }
   .content-main{
     display: flex;
@@ -857,10 +873,7 @@ hr {
   .hamburger{
     background: #fff;
   }
-  .left-sidebar{
-    position: absolute;
-    width: 100%;
-  }
+
   .close-menu{
     display: block;
   }

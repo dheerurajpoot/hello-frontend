@@ -20,10 +20,14 @@ const RightSidebar = ({ otherUsers }) => {
 										/>
 									</div>
 									<div className='request-profile'>
-										<h2>{user?.name}</h2>
+										<Link
+											to={`/profile/${user?._id}`}
+											className='suggested-name'>
+											<h2>{user?.name}</h2>
+										</Link>
 										<Link
 											className='mutual-friend'
-											to='#'>{`@${user?.username}`}</Link>
+											to={`/profile/${user?._id}`}>{`@${user?.username}`}</Link>
 									</div>
 								</div>
 								<div className='request-buttons'>

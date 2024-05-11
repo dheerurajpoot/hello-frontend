@@ -54,6 +54,26 @@ export const getUserProfile = createAsyncThunk(
 		}
 	}
 );
+export const follow = createAsyncThunk(
+	"auth/follow",
+	async (data, thunkAPI) => {
+		try {
+			return await userService.follow(data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	}
+);
+export const unfollow = createAsyncThunk(
+	"auth/unfollow",
+	async (data, thunkAPI) => {
+		try {
+			return await userService.unfollow(data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	}
+);
 
 export const userSlice = createSlice({
 	name: "auth",
@@ -71,7 +91,7 @@ export const userSlice = createSlice({
 				state.registedUser = action.payload;
 				state.message = "Success";
 				if (state.isSuccess === true) {
-					toast.success("Account Created Succuessfully");
+					toast.success("Account Created Successfully");
 				}
 			})
 			.addCase(registerUser.rejected, (state, action) => {
@@ -93,7 +113,7 @@ export const userSlice = createSlice({
 				state.user = action.payload;
 				state.message = "Success";
 				if (state.isSuccess === true) {
-					toast.success("Logged in Succuessfully");
+					toast.success("Logged in Successfully");
 				}
 			})
 			.addCase(loginUser.rejected, (state, action) => {
@@ -136,6 +156,50 @@ export const userSlice = createSlice({
 				state.isError = true;
 				state.isSuccess = false;
 				state.message = action.error;
+			})
+			.addCase(follow.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(follow.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.isSuccess = true;
+				state.follow = action.payload;
+				state.message = "Success";
+				if (state.isSuccess === true) {
+					toast.success(action.payload.message);
+				}
+			})
+			.addCase(follow.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.isSuccess = false;
+				state.message = action.error;
+				if (state.isError === true) {
+					toast.error(action.error);
+				}
+			})
+			.addCase(unfollow.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(unfollow.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.isSuccess = true;
+				state.unfollow = action.payload;
+				state.message = "Success";
+				if (state.isSuccess === true) {
+					toast.success(action.payload.message);
+				}
+			})
+			.addCase(unfollow.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.isSuccess = false;
+				state.message = action.error;
+				if (state.isError === true) {
+					toast.error(action.error);
+				}
 			});
 	},
 });

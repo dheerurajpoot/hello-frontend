@@ -8,7 +8,7 @@ import { USER_API_END_POINT } from "../utils/constant";
 import { refreshFollowing } from "../redux/userSlice";
 import { setRefresh } from "../redux/postSlice";
 import { toast } from "react-toastify";
-import { getUserProfile } from "../redux/UserNewSlice";
+import { follow, getUserProfile, unfollow } from "../redux/UserNewSlice";
 import { getUserPosts } from "../redux/PostNewSlice";
 
 const Profile = () => {
@@ -35,43 +35,51 @@ const Profile = () => {
 	}
 
 	//follow unfollow
-	const followHandler = async () => {
-		if (user.following.includes(id)) {
-			//unfollow
-			try {
-				axios.defaults.withCredentials = true;
-				const res = await axios.post(
-					`${USER_API_END_POINT}/unfollow/${id}`,
-					{ id: user?._id }
-				);
-				if (res.data.success) {
-					toast.success(res.data.message);
-				}
-				dispatch(refreshFollowing(id));
-				dispatch(setRefresh());
-			} catch (error) {
-				toast.error(error.response.data.message);
-				console.log(error);
-			}
+	const followUnfollowHandler = () => {
+		if (user?.following.includes(id)) {
+			dispatch(unfollow({ id, userId: user?._id }));
 		} else {
-			//follow
-			try {
-				axios.defaults.withCredentials = true;
-				const res = await axios.post(
-					`${USER_API_END_POINT}/follow/${id}`,
-					{ id: user?._id }
-				);
-				if (res.data.success) {
-					toast.success(res.data.message);
-				}
-				dispatch(refreshFollowing(id));
-				dispatch(setRefresh());
-			} catch (error) {
-				toast.error(error.response.data.message);
-				console.log(error);
-			}
+			dispatch(follow({ id, userId: user?._id }));
 		}
 	};
+
+	// const followHandler = async () => {
+	// 	if (user.following.includes(id)) {
+	// 		//unfollow
+	// 		try {
+	// 			axios.defaults.withCredentials = true;
+	// 			const res = await axios.post(
+	// 				`${USER_API_END_POINT}/unfollow/${id}`,
+	// 				{ id: user?._id }
+	// 			);
+	// 			if (res.data.success) {
+	// 				toast.success(res.data.message);
+	// 			}
+	// 			dispatch(refreshFollowing(id));
+	// 			dispatch(setRefresh());
+	// 		} catch (error) {
+	// 			toast.error(error.response.data.message);
+	// 			console.log(error);
+	// 		}
+	// 	} else {
+	// 		//follow
+	// 		try {
+	// 			axios.defaults.withCredentials = true;
+	// 			const res = await axios.post(
+	// 				`${USER_API_END_POINT}/follow/${id}`,
+	// 				{ id: user?._id }
+	// 			);
+	// 			if (res.data.success) {
+	// 				toast.success(res.data.message);
+	// 			}
+	// 			dispatch(refreshFollowing(id));
+	// 			dispatch(setRefresh());
+	// 		} catch (error) {
+	// 			toast.error(error.response.data.message);
+	// 			console.log(error);
+	// 		}
+	// 	}
+	// };
 
 	return (
 		<>
@@ -116,9 +124,9 @@ const Profile = () => {
 							</button>
 						) : (
 							<button
-								onClick={followHandler}
+								onClick={followUnfollowHandler}
 								className='edit-profile'>
-								{user.following.includes(id)
+								{user?.following.includes(id)
 									? "Following"
 									: "Follow"}
 							</button>

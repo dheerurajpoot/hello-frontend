@@ -67,11 +67,45 @@ const getUserProfile = async (id) => {
 		throw error;
 	}
 };
+const follow = async (data) => {
+	console.log(data);
+	try {
+		const response = await axios.post(
+			`${USER_API_END_POINT}/follow/${data?.id}`,
+			{ id: data?.userId },
+			{
+				withCredentials: true,
+			}
+		);
+		console.log(response);
+		return response.data;
+	} catch (error) {
+		console.error("Error in following user :", error);
+		throw error;
+	}
+};
+const unfollow = async (data) => {
+	try {
+		const response = await axios.post(
+			`${USER_API_END_POINT}/unfollow/${data?.id}`,
+			{ id: data?.userId },
+			{
+				withCredentials: true,
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error in unfollowing user :", error);
+		throw error;
+	}
+};
 
 const userService = {
 	registerUser,
 	loginUser,
 	getSuggestedUser,
 	getUserProfile,
+	follow,
+	unfollow,
 };
 export default userService;
