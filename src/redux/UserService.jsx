@@ -68,7 +68,6 @@ const getUserProfile = async (id) => {
 	}
 };
 const follow = async (data) => {
-	console.log(data);
 	try {
 		const response = await axios.post(
 			`${USER_API_END_POINT}/follow/${data?.id}`,
@@ -77,7 +76,6 @@ const follow = async (data) => {
 				withCredentials: true,
 			}
 		);
-		console.log(response);
 		return response.data;
 	} catch (error) {
 		console.error("Error in following user :", error);

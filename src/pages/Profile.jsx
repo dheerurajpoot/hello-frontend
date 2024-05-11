@@ -3,11 +3,6 @@ import Avatar from "react-avatar";
 import Post from "../components/Post";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
-import { USER_API_END_POINT } from "../utils/constant";
-import { refreshFollowing } from "../redux/userSlice";
-import { setRefresh } from "../redux/postSlice";
-import { toast } from "react-toastify";
 import { follow, getUserProfile, unfollow } from "../redux/UserNewSlice";
 import { getUserPosts } from "../redux/PostNewSlice";
 
@@ -36,50 +31,12 @@ const Profile = () => {
 
 	//follow unfollow
 	const followUnfollowHandler = () => {
-		if (user?.following.includes(id)) {
+		if (profile?.followers.includes(user?._id)) {
 			dispatch(unfollow({ id, userId: user?._id }));
 		} else {
 			dispatch(follow({ id, userId: user?._id }));
 		}
 	};
-
-	// const followHandler = async () => {
-	// 	if (user.following.includes(id)) {
-	// 		//unfollow
-	// 		try {
-	// 			axios.defaults.withCredentials = true;
-	// 			const res = await axios.post(
-	// 				`${USER_API_END_POINT}/unfollow/${id}`,
-	// 				{ id: user?._id }
-	// 			);
-	// 			if (res.data.success) {
-	// 				toast.success(res.data.message);
-	// 			}
-	// 			dispatch(refreshFollowing(id));
-	// 			dispatch(setRefresh());
-	// 		} catch (error) {
-	// 			toast.error(error.response.data.message);
-	// 			console.log(error);
-	// 		}
-	// 	} else {
-	// 		//follow
-	// 		try {
-	// 			axios.defaults.withCredentials = true;
-	// 			const res = await axios.post(
-	// 				`${USER_API_END_POINT}/follow/${id}`,
-	// 				{ id: user?._id }
-	// 			);
-	// 			if (res.data.success) {
-	// 				toast.success(res.data.message);
-	// 			}
-	// 			dispatch(refreshFollowing(id));
-	// 			dispatch(setRefresh());
-	// 		} catch (error) {
-	// 			toast.error(error.response.data.message);
-	// 			console.log(error);
-	// 		}
-	// 	}
-	// };
 
 	return (
 		<>
@@ -126,7 +83,7 @@ const Profile = () => {
 							<button
 								onClick={followUnfollowHandler}
 								className='edit-profile'>
-								{user?.following.includes(id)
+								{profile?.followers.includes(user?._id)
 									? "Following"
 									: "Follow"}
 							</button>
