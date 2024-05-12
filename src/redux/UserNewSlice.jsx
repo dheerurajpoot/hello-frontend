@@ -34,6 +34,16 @@ export const loginUser = createAsyncThunk(
 		}
 	}
 );
+export const getAllUsers = createAsyncThunk(
+	"auth/allusers",
+	async (thunkAPI) => {
+		try {
+			return await userService.getAllUsers();
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	}
+);
 export const getSuggestedUser = createAsyncThunk(
 	"auth/suggestedUser",
 	async (id, thunkAPI) => {
@@ -124,6 +134,22 @@ export const userSlice = createSlice({
 				if (state.isError === true) {
 					toast.error(action?.payload?.response?.data?.message);
 				}
+			})
+			.addCase(getAllUsers.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getAllUsers.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.isSuccess = true;
+				state.allUsers = action.payload;
+				state.message = "Success";
+			})
+			.addCase(getAllUsers.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.isSuccess = false;
+				state.message = action.error;
 			})
 			.addCase(getSuggestedUser.pending, (state) => {
 				state.isLoading = true;

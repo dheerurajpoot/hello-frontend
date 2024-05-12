@@ -11,7 +11,9 @@ const Main = () => {
 	const dispatch = useDispatch();
 
 	const createPostHandle = () => {
-		dispatch(createPost({ description, id: user?._id }));
+		dispatch(createPost({ description, id: user?._id })).then(() => {
+			dispatch(getUserPosts());
+		});
 	};
 
 	// get all user posts

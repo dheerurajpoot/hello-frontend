@@ -39,6 +39,17 @@ const loginUser = async (userData) => {
 		throw error;
 	}
 };
+const getAllUsers = async () => {
+	try {
+		const response = await axios.get(`${USER_API_END_POINT}/allusers`, {
+			withCredentials: true,
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error in getting all users :", error);
+		throw error;
+	}
+};
 const getSuggestedUser = async (id) => {
 	try {
 		const response = await axios.get(
@@ -101,6 +112,7 @@ const unfollow = async (data) => {
 const userService = {
 	registerUser,
 	loginUser,
+	getAllUsers,
 	getSuggestedUser,
 	getUserProfile,
 	follow,

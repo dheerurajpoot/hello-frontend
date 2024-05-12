@@ -4,54 +4,29 @@ import { Link } from "react-router-dom";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { FaShare } from "react-icons/fa";
-import axios from "axios";
-import { POST_API_END_POINT } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
-import { setRefresh } from "../redux/postSlice";
 import { postTiming } from "../utils/constant";
-import { toast } from "react-toastify";
 import { CiMenuKebab } from "react-icons/ci";
+import { deleteUserPost, getUserPosts, postLike } from "../redux/PostNewSlice";
 
 const Post = ({ post }) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state?.auth?.user?.user);
+	const profile = useSelector((state) => state?.auth?.profile?.user);
 
 	const likeHandler = async (id) => {
-		try {
-			const res = await axios.put(
-				`${POST_API_END_POINT}/like/${id}`,
-				{ id: user?._id },
-				{
-					withCredentials: true,
-				}
-			);
-			if (res.data.success) {
-				toast.success(res.data.message);
-			}
-			dispatch(setRefresh());
-		} catch (error) {
-			toast.error(error.response.data.message);
-			console.log(error);
-		}
+		dispatch(postLike({ id, userId: user?._id })).then(() => {
+			dispatch(getUserPosts());
+		});
 	};
 	// delete post
 	const deletePostHandler = async (id) => {
-		try {
-			axios.defaults.withCredentials = true;
-			const res = await axios.delete(
-				`${POST_API_END_POINT}/delete/${id}`
-			);
-			if (res.data.success) {
-				toast.success(res.data.message);
-			}
-			dispatch(setRefresh());
-		} catch (error) {
-			toast.error("Something went wrong!");
-			console.log(error);
-		}
+		dispatch(deleteUserPost(id)).then(() => {
+			dispatch(getUserPosts());
+		});
 	};
 
-	// Implement your post sharing functionality here
+	// post sharing
 	const sharePostHandler = () => {
 		if (navigator.share) {
 			navigator
@@ -67,6 +42,7 @@ const Post = ({ post }) => {
 		}
 	};
 
+	// post 3 dot menu
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef(null);
 
@@ -112,22 +88,25 @@ const Post = ({ post }) => {
 									{postTiming(post.createdAt)}
 								</span>
 							</div>
+							{/* {user?._id !== post?.userID &&
+							user?._id !== post?.userID ? (
+								<span className='post-follow'>Follow+</span>
+							) : (
+								""
+							)} */}
 						</Link>
 
 						{/* delete post functionality here */}
-
-						{user?._id === post?.userID &&
-						user?._id === post?.userID ? (
-							<div
-								className='dropdown-container'
-								ref={dropdownRef}>
-								<CiMenuKebab
-									className='dot-menu'
-									size={30}
-									onClick={toggleMenu}
-								/>
-								{isOpen && (
-									<div className='dropdown-menu'>
+						<div className='dropdown-container' ref={dropdownRef}>
+							<CiMenuKebab
+								className='dot-menu'
+								size={30}
+								onClick={toggleMenu}
+							/>
+							{isOpen && (
+								<div className='dropdown-menu'>
+									{user?._id === post?.userID &&
+									user?._id === post?.userID ? (
 										<a
 											href='#'
 											onClick={() =>
@@ -135,12 +114,13 @@ const Post = ({ post }) => {
 											}>
 											Delete
 										</a>
-									</div>
-								)}
-							</div>
-						) : (
-							<span className='post-follow'>Follow+</span>
-						)}
+									) : (
+										""
+									)}
+									<a href='#'>Share</a>
+								</div>
+							)}
+						</div>
 					</div>
 
 					<div className='content-main'>

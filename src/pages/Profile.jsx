@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Avatar from "react-avatar";
 import Post from "../components/Post";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { follow, getUserProfile, unfollow } from "../redux/UserNewSlice";
 import { getUserPosts } from "../redux/PostNewSlice";
 
@@ -20,24 +20,21 @@ const Profile = () => {
 	const profile = useSelector((state) => state?.auth?.profile?.user);
 	const posts = useSelector((state) => state?.posts?.posts);
 
-	const profilePosts = [];
-	if (posts) {
-		for (const post of posts) {
-			if (profile && profile?._id === post?.userID) {
-				profilePosts.push(post);
-			}
-		}
-	}
+	const profilePosts =
+		posts?.filter((post) => post.userID === profile?._id) || [];
 
 	//follow unfollow
 	const followUnfollowHandler = () => {
 		if (profile?.followers.includes(user?._id)) {
-			dispatch(unfollow({ id, userId: user?._id }));
+			dispatch(unfollow({ id, userId: user?._id })).then(() => {
+				dispatch(getUserProfile(id)); // Update profile data after unfollow
+			});
 		} else {
-			dispatch(follow({ id, userId: user?._id }));
+			dispatch(follow({ id, userId: user?._id })).then(() => {
+				dispatch(getUserProfile(id)); // Update profile data after follow
+			});
 		}
 	};
-
 	return (
 		<>
 			<section className='profile-page'>
@@ -91,10 +88,21 @@ const Profile = () => {
 					</div>
 				</div>
 				<section className='profile-posts'>
-					<h2>Your Timeline</h2>
-					{profilePosts.map((post) => (
-						<Post key={post?._id} post={post} />
-					))}
+					{profilePosts && profilePosts.length === 0 ? (
+						<div className='no-posts'>
+							<p>
+								You didn't' posted Anything{" "}
+								<Link to={"/"}>Create Post</Link>
+							</p>
+						</div>
+					) : (
+						<>
+							<h2>Your Timeline</h2>
+							{profilePosts.map((post) => (
+								<Post key={post?._id} post={post} />
+							))}
+						</>
+					)}
 				</section>
 			</section>
 		</>

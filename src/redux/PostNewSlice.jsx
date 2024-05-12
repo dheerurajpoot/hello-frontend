@@ -27,6 +27,26 @@ export const getUserPosts = createAsyncThunk("user/posts", async (thunkAPI) => {
 		return thunkAPI.rejectWithValue(error);
 	}
 });
+export const deleteUserPost = createAsyncThunk(
+	"user/deletedPost",
+	async (id, thunkAPI) => {
+		try {
+			return await postService.deleteUserPost(id);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	}
+);
+export const postLike = createAsyncThunk(
+	"user/likedPost",
+	async (data, thunkAPI) => {
+		try {
+			return await postService.postLike(data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	}
+);
 
 export const postNewSlice = createSlice({
 	name: "posts",
@@ -44,7 +64,7 @@ export const postNewSlice = createSlice({
 				state.createdPost = action.payload;
 				state.message = "Success";
 				if (state.isSuccess === true) {
-					toast.success("Post Created Succuessfully");
+					toast.success("Post Created Successfully");
 				}
 			})
 			.addCase(createPost.rejected, (state, action) => {
@@ -67,6 +87,44 @@ export const postNewSlice = createSlice({
 				state.message = "Success";
 			})
 			.addCase(getUserPosts.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.isSuccess = false;
+				state.message = action.error;
+			})
+			.addCase(deleteUserPost.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(deleteUserPost.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.isSuccess = true;
+				state.deletedPost = action.payload;
+				state.message = "Success";
+				if (state.isSuccess === true) {
+					toast.success("Post Deleted Successfully");
+				}
+			})
+			.addCase(deleteUserPost.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.isSuccess = false;
+				state.message = action.error;
+				if (state.isError === true) {
+					toast.error(action.error);
+				}
+			})
+			.addCase(postLike.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(postLike.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.isSuccess = true;
+				state.deletedPost = action.payload;
+				state.message = "Success";
+			})
+			.addCase(postLike.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.isSuccess = false;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
 import { FaFacebookMessenger } from "react-icons/fa";
@@ -6,7 +6,7 @@ import { BiSolidVideos } from "react-icons/bi";
 import { IoNotifications } from "react-icons/io5";
 import { CgMenuGridO } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaHome } from "react-icons/fa";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
@@ -17,11 +17,13 @@ import { toast } from "react-toastify";
 import { TbLogout2 } from "react-icons/tb";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { MdOutlineFeaturedVideo } from "react-icons/md";
+import { getAllUsers } from "../redux/UserNewSlice";
 
 const Header = () => {
-	const user = useSelector((store) => store?.auth?.user?.user);
+	const user = useSelector((state) => state?.auth?.user?.user);
 	const [isOpen, setIsOpen] = React.useState(false);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const toggleDrawer = () => {
 		setIsOpen((prevState) => !prevState);
 	};
@@ -36,6 +38,25 @@ const Header = () => {
 			toast.error(error.response.data.message);
 			console.log(error);
 		}
+	};
+
+	// search
+
+	useEffect(() => {
+		dispatch(getAllUsers());
+	}, [dispatch]);
+
+	const [searchQuery, setSearchQuery] = useState("");
+	const handleSearchChange = (event) => {
+		setSearchQuery(event.target.value);
+	};
+	const allUser = useSelector((state) => state?.auth?.allUsers?.allUsers);
+	const filteredUsers = allUser?.filter((user) =>
+		user?.name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+	const resetSearch = (id) => {
+		navigate(`/profile/${id}`);
+		setSearchQuery("");
 	};
 
 	return (
@@ -130,9 +151,34 @@ const Header = () => {
 					</div>
 					<div className='header-searchbox'>
 						<form className='header-search'>
-							<input type='text' placeholder='Serch Here' />
+							<input
+								type='text'
+								placeholder='Serch Here'
+								value={searchQuery}
+								onChange={handleSearchChange}
+							/>
 							<i className='fa-solid fa-magnifying-glass'></i>
 						</form>
+						<div className='search-users'>
+							{searchQuery && (
+								<div>
+									{filteredUsers.map((user, index) => (
+										<div
+											className='search-users-details'
+											key={index}>
+											<Link
+												to={`/profile/${user?._id}`}
+												className='search-users-name'
+												onClick={() =>
+													resetSearch(user?._id)
+												}>
+												{user?.name}
+											</Link>
+										</div>
+									))}
+								</div>
+							)}
+						</div>
 					</div>
 					<div className='header-menu'>
 						<Link to={"/"}>

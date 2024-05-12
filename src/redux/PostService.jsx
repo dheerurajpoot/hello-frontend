@@ -30,9 +30,40 @@ const getUserPosts = async () => {
 		throw error;
 	}
 };
+const deleteUserPost = async (id) => {
+	try {
+		const response = await axios.delete(
+			`${POST_API_END_POINT}/delete/${id}`,
+			{
+				withCredentials: true,
+			}
+		);
+		return response.data.posts;
+	} catch (error) {
+		console.error("Error in deleting user post :", error);
+		throw error;
+	}
+};
+const postLike = async (data) => {
+	try {
+		const response = await axios.put(
+			`${POST_API_END_POINT}/like/${data?.id}`,
+			{ id: data?.userId },
+			{
+				withCredentials: true,
+			}
+		);
+		return response.data.posts;
+	} catch (error) {
+		console.error("Error in liking user post :", error);
+		throw error;
+	}
+};
 
 const postService = {
 	createPost,
 	getUserPosts,
+	deleteUserPost,
+	postLike,
 };
 export default postService;
