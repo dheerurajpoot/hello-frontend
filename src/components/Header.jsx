@@ -89,7 +89,7 @@ const Header = () => {
 							open={isOpen}
 							onClose={toggleDrawer}
 							direction='right'
-							className='bla bla bla'>
+							className=''>
 							<div className='hello-drawer'>
 								<div className='drawer-header'>
 									<div className='left-sidebar-profile'>
