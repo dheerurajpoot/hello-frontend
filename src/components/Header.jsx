@@ -70,14 +70,76 @@ const Header = () => {
 							</Link>
 						</div>
 					</div>
-					{/* mobile menu */}
-					<div className='header-mobile-profile header-profile'>
-						<Link>
-							<FaSearch
-								className='header-mobile-search'
+
+					<div className='header-searchbox'>
+						<form className='header-search'>
+							<input
+								type='text'
+								placeholder='Serch Here'
+								value={searchQuery}
+								onChange={handleSearchChange}
+							/>
+							<i className='fa-solid fa-magnifying-glass'></i>
+						</form>
+						<div className='search-users'>
+							{searchQuery && (
+								<div>
+									{filteredUsers.map((user, index) => (
+										<div
+											className='search-users-details'
+											key={index}>
+											<Link
+												to={`/profile/${user?._id}`}
+												className='search-users-name'
+												onClick={() =>
+													resetSearch(user?._id)
+												}>
+												{user?.name}
+											</Link>
+										</div>
+									))}
+								</div>
+							)}
+						</div>
+					</div>
+					<div className='header-menu'>
+						<Link to={"/"}>
+							<div className='menu-icons'>
+								<FaHome
+									className='header-menu-icon'
+									size={25}
+								/>
+							</div>
+						</Link>
+						<div className='menu-icons'>
+							<BiSolidVideos
+								className='header-menu-icon'
 								size={25}
 							/>
+						</div>
+						<div className='menu-icons'>
+							<FaFacebookMessenger
+								className='header-menu-icon'
+								size={25}
+							/>
+						</div>
+						<div className='menu-icons'>
+							<IoNotifications
+								className='header-menu-icon'
+								size={25}
+							/>
+						</div>
+						<Link
+							to={`/profile/${user?._id}`}
+							className='header-profile'>
+							<Avatar
+								src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+								size='40'
+								round={true}
+							/>
 						</Link>
+					</div>
+					<div className='header-mobile-profile header-profile'>
 						<div className='hamburger'>
 							<CgMenuGridO
 								onClick={toggleDrawer}
@@ -148,74 +210,6 @@ const Header = () => {
 								</Link>
 							</div>
 						</Drawer>
-					</div>
-					<div className='header-searchbox'>
-						<form className='header-search'>
-							<input
-								type='text'
-								placeholder='Serch Here'
-								value={searchQuery}
-								onChange={handleSearchChange}
-							/>
-							<i className='fa-solid fa-magnifying-glass'></i>
-						</form>
-						<div className='search-users'>
-							{searchQuery && (
-								<div>
-									{filteredUsers.map((user, index) => (
-										<div
-											className='search-users-details'
-											key={index}>
-											<Link
-												to={`/profile/${user?._id}`}
-												className='search-users-name'
-												onClick={() =>
-													resetSearch(user?._id)
-												}>
-												{user?.name}
-											</Link>
-										</div>
-									))}
-								</div>
-							)}
-						</div>
-					</div>
-					<div className='header-menu'>
-						<Link to={"/"}>
-							<div className='menu-icons'>
-								<FaHome
-									className='header-menu-icon'
-									size={25}
-								/>
-							</div>
-						</Link>
-						<div className='menu-icons'>
-							<BiSolidVideos
-								className='header-menu-icon'
-								size={25}
-							/>
-						</div>
-						<div className='menu-icons'>
-							<FaFacebookMessenger
-								className='header-menu-icon'
-								size={25}
-							/>
-						</div>
-						<div className='menu-icons'>
-							<IoNotifications
-								className='header-menu-icon'
-								size={25}
-							/>
-						</div>
-						<Link
-							to={`/profile/${user?._id}`}
-							className='header-profile'>
-							<Avatar
-								src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
-								size='40'
-								round={true}
-							/>
-						</Link>
 					</div>
 				</div>
 			</section>
