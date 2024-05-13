@@ -21,7 +21,7 @@ const Main = () => {
 		data.append("file", image);
 		data.append("upload_preset", "images-preset");
 		try {
-			let cloudname = "dfxxuq8qo";
+			let cloudname = import.meta.env.VITE_APP_CLOUD_NAME;
 			let resourceType = "image";
 			let api = `https://api.cloudinary.com/v1_1/${cloudname}/${resourceType}/upload `;
 
