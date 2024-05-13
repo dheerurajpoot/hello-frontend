@@ -5,7 +5,11 @@ const createPost = async (data) => {
 	try {
 		const response = await axios.post(
 			`${POST_API_END_POINT}/create`,
-			{ description: data?.description, id: data?.id },
+			{
+				description: data?.description,
+				image: data?.imgUrl,
+				id: data?.id,
+			},
 			{
 				headers: {
 					"Content-Type": "application/json",

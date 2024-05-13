@@ -6,26 +6,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, getUserPosts } from "../redux/PostNewSlice";
 import { CiImageOn } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
+import axios from "axios";
 
 const Main = () => {
 	const [description, setDescription] = useState("");
 	const [image, setImage] = useState(null);
-	const imageRef = useRef();
-
-	const onImageChange = (e) => {
-		if (e.target.files && e.target.files[0]) {
-			let img = e.target.files[0];
-			setImage(img);
-		}
-	};
+	const imageRef = useRef(null);
 
 	const user = useSelector((state) => state?.auth?.user?.user);
 	const dispatch = useDispatch();
 
-	const createPostHandle = () => {
-		dispatch(createPost({ description, id: user?._id })).then(() => {
-			dispatch(getUserPosts());
-		});
+	const uploadFile = async () => {
+		const data = new FormData();
+		data.append("file", image);
+		data.append("upload_preset", "images-preset");
+		try {
+			let cloudname = "dfxxuq8qo";
+			let resourceType = "image";
+			let api = `https://api.cloudinary.com/v1_1/${cloudname}/${resourceType}/upload `;
+
+			const res = await axios.post(api, data);
+
+			const { secure_url } = res.data;
+			return secure_url;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const createPostHandle = async (e) => {
+		e.preventDefault();
+		const imgUrl = await uploadFile();
+
+		dispatch(createPost({ description, imgUrl, id: user?._id })).then(
+			() => {
+				dispatch(getUserPosts());
+			}
+		);
+		setImage(null);
 	};
 
 	// get all user posts
@@ -42,50 +60,54 @@ const Main = () => {
 		<>
 			<section className='main-section'>
 				<div className='create-post-section'>
-					<div className='create-post'>
-						<Link
-							to={`/profile/${user?._id}`}
-							className='sidebar-profile-img'>
-							<Avatar
-								src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
-								size='50'
-								round={true}
-							/>
-						</Link>
-						<div className='post-input'>
-							<input
-								value={description}
-								onChange={(e) => setDescription(e.target.value)}
-								type='text'
-								placeholder='What&#x27;s in your mind!'
-							/>
+					<form onSubmit={createPostHandle}>
+						<div className='create-post'>
+							<Link
+								to={`/profile/${user?._id}`}
+								className='sidebar-profile-img'>
+								<Avatar
+									src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+									size='50'
+									round={true}
+								/>
+							</Link>
+							<div className='post-input'>
+								<input
+									value={description}
+									onChange={(e) =>
+										setDescription(e.target.value)
+									}
+									type='text'
+									placeholder='What&#x27;s in your mind!'
+								/>
+							</div>
 						</div>
-					</div>
-					<div className='post-elements'>
-						<div
-							className='choose-img'
-							onClick={() => imageRef.current.click()}>
-							<CiImageOn size={30} />
-							<span>Photo</span>
+						<div className='post-elements'>
+							<div
+								className='choose-img'
+								onClick={() => imageRef.current.click()}>
+								<CiImageOn size={30} />
+								<span>Photo</span>
+							</div>
+							<div className='choose-photo'>
+								<input
+									type='file'
+									accept='image/*'
+									name='create-post-img'
+									id='create-post-img'
+									ref={imageRef}
+									onChange={(e) =>
+										setImage(e.target.files[0])
+									}
+								/>
+							</div>
+							<div>
+								<button type='submit' className='submit-post'>
+									Post
+								</button>
+							</div>
 						</div>
-						<div className='choose-photo'>
-							<input
-								type='file'
-								name='create-post-img'
-								id='create-post-img'
-								ref={imageRef}
-								onChange={onImageChange}
-							/>
-						</div>
-						<div>
-							<button
-								type='submit'
-								onClick={createPostHandle}
-								className='submit-post'>
-								Post
-							</button>
-						</div>
-					</div>
+					</form>
 					{image && (
 						<div className='img-preview'>
 							<RxCross2

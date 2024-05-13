@@ -88,12 +88,6 @@ const Post = ({ post }) => {
 									{postTiming(post.createdAt)}
 								</span>
 							</div>
-							{/* {user?._id !== post?.userID &&
-							user?._id !== post?.userID ? (
-								<span className='post-follow'>Follow+</span>
-							) : (
-								""
-							)} */}
 						</Link>
 
 						{/* delete post functionality here */}
@@ -125,7 +119,13 @@ const Post = ({ post }) => {
 
 					<div className='content-main'>
 						<p className='caption'>{post?.description}</p>
-						{/* {post.image && <img src={post.image} alt="" className="post-img" />} */}
+						{post.image && (
+							<img
+								src={post?.image}
+								alt=''
+								className='post-img'
+							/>
+						)}
 					</div>
 
 					<div className='interaction'>
