@@ -936,7 +936,7 @@ hr {
   margin-left: 45px;
 }
 
-.time {
+.chat-time {
   font-size: 12px;
   margin-bottom:10px;
   margin-left: 85px;
@@ -960,12 +960,13 @@ hr {
 
 .footer-chat {
   height: 80px;
-  width: 100%;
+  width: 90%;
   display:flex;
   align-items: center;
   background-color: transparent;
   border-top: 2px solid #EEE;
-  
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .chat .footer-chat .icon {
@@ -973,44 +974,6 @@ hr {
   color:var(--secondary-color);
   font-size: 14px;
   background: none;
-}
-.chat .footer-chat .send {
-  color:#fff;
-  background-color: #4f6ebd;
-  position: absolute;
-  right: 50px;
-  padding: 12px 12px 12px 12px;
-  border-radius: 50px;
-  font-size: 14pt;
-}
-
-.chat .footer-chat .name {
-  margin: 0 0 0 20px;
-  text-transform: uppercase;
-  font-family:'Montserrat', sans-serif;
-  font-size: 13pt;
-  color:#515151;
-}
-
-.chat .footer-chat .right {
-  position: absolute;
-  right: 40px;
-}
-
-.write-message {
-  border:0.5px solid gray !important;
-  width:80%;
-  height: 50px;
-  margin-left: 20px;
-  padding: 10px 20px;
-  background: none;
-  font-size: 16px;
-  border-radius: 30px;
-}
-
-.footer-chat *::-webkit-input-placeholder {
-  color: #C0C0C0;
-  font-size: 13pt;
 }
 
 .clickable {
