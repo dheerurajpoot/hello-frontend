@@ -118,10 +118,12 @@ const Header = () => {
 							/>
 						</div>
 						<div className='menu-icons'>
-							<FaFacebookMessenger
-								className='header-menu-icon'
-								size={25}
-							/>
+							<Link to={"/chat"}>
+								<FaFacebookMessenger
+									className='header-menu-icon'
+									size={25}
+								/>
+							</Link>
 						</div>
 						<div className='menu-icons'>
 							<IoNotifications
