@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { FaUser } from "react-icons/fa";
 import { FaEllipsisH } from "react-icons/fa";
-// import { FaSmile } from "react-icons/fa";
-import { FaPaperPlane } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getMessages } from "../redux/MessageSlice";
+import { getMessages, sendMessages } from "../redux/MessageSlice";
 import { format } from "timeago.js";
 
 const ChatBox = ({ chat }) => {
-	const [text, setText] = useState("");
+	const [msg, setMsg] = useState("");
 
 	const messages = useSelector((state) => state.messages?.messages);
 	const user = useSelector((state) => state.auth?.user?.user);
@@ -19,9 +17,19 @@ const ChatBox = ({ chat }) => {
 		dispatch(getMessages(chat?._id));
 	}, [chat?._id]);
 
-	function submitHandler(text) {
-		console.log("enter", text);
-	}
+	const msgHandler = (e) => {
+		e.preventDefault();
+		dispatch(
+			sendMessages({
+				chatId: chat?._id,
+				senderId: user?._id,
+				text: msg,
+			})
+		).then(() => {
+			dispatch(getMessages(chat?._id));
+			setMsg("");
+		});
+	};
 	return (
 		<section className='chat'>
 			{chat && chat ? (
@@ -31,11 +39,11 @@ const ChatBox = ({ chat }) => {
 						<p className='name'>{chat?.members?.receiver?.name}</p>
 						<FaEllipsisH className='icon clickable right' />
 					</div>
-					{messages && messages ? (
+					{messages?.length !== 0 ? (
 						<div className='messages-chat'>
 							{messages?.map((message, index) => {
 								return (
-									<div key={index}>
+									<div key={index} className='msg-body'>
 										<div className='message text-only'>
 											<div
 												className={
@@ -62,23 +70,25 @@ const ChatBox = ({ chat }) => {
 							})}
 						</div>
 					) : (
-						<p>You don't have any message</p>
+						<div className='messages-chat empty-message'>
+							<p>You don't have any message yet!</p>
+						</div>
 					)}
-
 					<div className='footer-chat'>
 						<InputEmoji
-							value={text}
-							onChange={setText}
+							value={msg}
+							onChange={setMsg}
 							cleanOnEnter
-							onEnter={submitHandler}
 							placeholder='Type a message'
 						/>
-						<FaPaperPlane size={30} className='icon clickable' />
+						<div className='send-msg' onClick={msgHandler}>
+							Send
+						</div>
 					</div>
 				</div>
 			) : (
 				<p className='show-conversion'>
-					Click on Chats to Show Conversion{" "}
+					Tap on Chats to Start Conversion{" "}
 				</p>
 			)}
 		</section>
