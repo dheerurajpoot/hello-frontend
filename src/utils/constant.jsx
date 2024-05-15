@@ -5,6 +5,7 @@
 export const USER_API_END_POINT = "http://localhost:3000/api/v1/user";
 export const POST_API_END_POINT = "http://localhost:3000/api/v1/post";
 export const CHAT_API_END_POINT = "http://localhost:3000/api/v1/chat";
+export const MESSAGE_API_END_POINT = "http://localhost:3000/api/v1/message";
 
 export const postTiming = (timestamp) => {
 	let time = Date.parse(timestamp);

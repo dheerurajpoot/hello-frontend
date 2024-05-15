@@ -10,18 +10,13 @@ import { getUserProfile } from "../redux/UserNewSlice";
 
 const Chat = () => {
 	const dispatch = useDispatch();
+	const [currentChat, setCurrentChat] = useState(null);
 	const user = useSelector((state) => state.auth?.user?.user);
 	const chats = useSelector((state) => state.chats?.chats);
 
 	useEffect(() => {
 		dispatch(getChat(user?._id));
 	}, [user?._id]);
-
-	const chattinguser = [];
-	chats.map((chat) => {
-		const userId = chat.members.find((id) => id !== user?._id);
-		chattinguser.push(userId);
-	});
 
 	return (
 		<>
@@ -43,15 +38,18 @@ const Chat = () => {
 						</div>
 						{chats?.map((chat, index) => {
 							return (
-								<Conversion
+								<div
 									key={index}
-									data={chat}
-									currentUserId={user?._id}
-								/>
+									onClick={() => setCurrentChat(chat)}>
+									<Conversion
+										data={chat}
+										currentUserId={user?._id}
+									/>
+								</div>
 							);
 						})}
 					</section>
-					<ChatBox />
+					<ChatBox chat={currentChat} />
 				</div>
 			</div>
 		</>

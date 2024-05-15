@@ -871,7 +871,12 @@ hr {
   width: 70%;
   background: #fff;
 }
-
+.show-conversion{
+  margin: 50px auto;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+}
 .header-chat {
   background-color: #FFF;
   height: 90px;
@@ -890,8 +895,6 @@ hr {
 
 .chat .header-chat .name {
   margin: 0 0 0 20px;
-  text-transform: uppercase;
-  font-family:'Montserrat', sans-serif;
   font-size: 13pt;
   color:#515151;
 }
