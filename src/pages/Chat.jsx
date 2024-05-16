@@ -13,9 +13,18 @@ const Chat = () => {
 	const socket = useRef();
 	const [currentChat, setCurrentChat] = useState(null);
 	const [onlineUsers, setOnlineUsers] = useState([]);
+	const [sendMessage, setSendMessage] = useState(null);
+	const [receiveMessage, setReceiveMessage] = useState(null);
 
 	const user = useSelector((state) => state.auth?.user?.user);
 	const chats = useSelector((state) => state.chats?.chats);
+
+	// send messages to the socket server
+	useEffect(() => {
+		if (sendMessage !== null) {
+			socket.current.emit("send-message", sendMessage);
+		}
+	}, [sendMessage]);
 
 	useEffect(() => {
 		socket.current = io("http://localhost:8800");
@@ -25,6 +34,12 @@ const Chat = () => {
 		});
 	}, [user]);
 
+	// receive messages from the socket server
+	useEffect(() => {
+		socket.current.on("recieve-message", (data) => {
+			setReceiveMessage(data);
+		});
+	}, []);
 	useEffect(() => {
 		dispatch(getChat(user?._id));
 	}, [user?._id]);
@@ -60,7 +75,11 @@ const Chat = () => {
 							);
 						})}
 					</section>
-					<ChatBox chat={currentChat} />
+					<ChatBox
+						chat={currentChat}
+						setSendMessage={setSendMessage}
+						receiveMessage={receiveMessage}
+					/>
 				</div>
 			</div>
 		</>

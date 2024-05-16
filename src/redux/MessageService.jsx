@@ -3,20 +3,12 @@ import { MESSAGE_API_END_POINT } from "../utils/constant";
 
 const sendMessages = async (data) => {
 	try {
-		const response = await axios.post(
-			`${MESSAGE_API_END_POINT}`,
-			{
-				chatId: data?.chatId,
-				senderId: data?.senderId,
-				message: data?.text,
+		const response = await axios.post(`${MESSAGE_API_END_POINT}`, data, {
+			headers: {
+				"Content-Type": "application/json",
 			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-				withCredentials: true,
-			}
-		);
+			withCredentials: true,
+		});
 		return response.data;
 	} catch (error) {
 		console.error("Error in sending message :", error);

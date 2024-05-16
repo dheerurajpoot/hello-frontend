@@ -907,6 +907,7 @@ hr {
 .chat .messages-chat {
   padding: 25px 35px;
   height: 85vh;
+  overflow: scroll;
 }
 
 .chat .messages-chat .message {

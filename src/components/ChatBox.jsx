@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { FaUser } from "react-icons/fa";
 import { FaEllipsisH } from "react-icons/fa";
@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMessages, sendMessages } from "../redux/MessageSlice";
 import { format } from "timeago.js";
 
-const ChatBox = ({ chat }) => {
+const ChatBox = ({ chat, setSendMessage, receiveMessage }) => {
 	const [msg, setMsg] = useState("");
-
+	const [userMsg, setUserMsg] = useState(null);
+	const scroll = useRef();
 	const messages = useSelector((state) => state.messages?.messages);
 	const user = useSelector((state) => state.auth?.user?.user);
 
@@ -17,33 +18,64 @@ const ChatBox = ({ chat }) => {
 		dispatch(getMessages(chat?._id));
 	}, [chat?._id]);
 
+	useEffect(() => {
+		setUserMsg(messages);
+	}, [messages]);
+
+	// Always scroll to last Message
+	useEffect(() => {
+		scroll.current?.scrollIntoView({ behavior: "smooth" });
+	}, [userMsg]);
+
+	const msgData = {
+		chatId: chat?._id,
+		senderId: user?._id,
+		message: msg,
+	};
+	// send messages to database
 	const msgHandler = (e) => {
 		e.preventDefault();
-		dispatch(
-			sendMessages({
-				chatId: chat?._id,
-				senderId: user?._id,
-				text: msg,
-			})
-		).then(() => {
+		dispatch(sendMessages(msgData)).then(() => {
 			dispatch(getMessages(chat?._id));
 			setMsg("");
 		});
+
+		// send message to socket server
+		const receiverId =
+			chat?.members?.sender?._id !== user?._id
+				? chat?.members?.sender?._id
+				: chat?.members?.receiver?._id;
+
+		setSendMessage({ ...msgData, receiverId });
 	};
+	// receive messages from parent component
+	useEffect(() => {
+		if (receiveMessage !== null && receiveMessage?.chatId === chat?._id) {
+			setUserMsg([...messages, receiveMessage]);
+		}
+	}, [receiveMessage]);
+
 	return (
 		<section className='chat'>
 			{chat && chat ? (
 				<div>
 					<div className='header-chat'>
 						<FaUser className='icon' />
-						<p className='name'>{chat?.members?.receiver?.name}</p>
+						<p className='name'>
+							{chat?.members?.receiver?._id !== user?._id
+								? chat?.members?.receiver?.name
+								: chat?.members?.sender?.name}
+						</p>
 						<FaEllipsisH className='icon clickable right' />
 					</div>
-					{messages?.length !== 0 ? (
+					{userMsg?.length !== 0 ? (
 						<div className='messages-chat'>
-							{messages?.map((message, index) => {
+							{userMsg?.map((message, index) => {
 								return (
-									<div key={index} className='msg-body'>
+									<div
+										key={index}
+										ref={scroll}
+										className='msg-body'>
 										<div className='message text-only'>
 											<div
 												className={
@@ -63,7 +95,8 @@ const ChatBox = ({ chat }) => {
 													? "response-time chat-time"
 													: "chat-time"
 											}>
-											{format(message?.createdAt)}
+											{message &&
+												format(message?.createdAt)}
 										</p>
 									</div>
 								);
@@ -78,7 +111,6 @@ const ChatBox = ({ chat }) => {
 						<InputEmoji
 							value={msg}
 							onChange={setMsg}
-							cleanOnEnter
 							placeholder='Type a message'
 						/>
 						<div className='send-msg' onClick={msgHandler}>
