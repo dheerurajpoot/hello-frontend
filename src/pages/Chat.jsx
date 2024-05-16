@@ -17,7 +17,9 @@ const Chat = () => {
 	const [receiveMessage, setReceiveMessage] = useState(null);
 
 	const user = useSelector((state) => state.auth?.user?.user);
-	const chats = useSelector((state) => state.chats?.chats);
+	const AllChats = useSelector((state) => state.chats?.chats);
+
+	const chats = [...AllChats].reverse();
 
 	// send messages to the socket server
 	useEffect(() => {
@@ -43,6 +45,13 @@ const Chat = () => {
 	useEffect(() => {
 		dispatch(getChat(user?._id));
 	}, [user?._id]);
+
+	// Set the first chat as the default chat
+	useEffect(() => {
+		if (chats.length > 0 && !currentChat) {
+			setCurrentChat(chats[0]);
+		}
+	}, [chats, currentChat]);
 
 	const checkOnlineStatus = (chat) => {
 		const chatMember =

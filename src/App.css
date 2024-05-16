@@ -334,7 +334,7 @@ input[type=file]::file-selector-button:hover {
   background-color: var(--secondary-color);
   border: none;
   color: #fff;
-  border-radius: .5rem;
+  border-radius: 3px;
   cursor: pointer;
   font-weight: 600;
 }
@@ -657,7 +657,7 @@ background: rgba(255,255,255,0.13);
   border: none;
   margin: 1rem 0rem;
   color: #fff;
-  border-radius: .5rem;
+  border-radius: 3px;
   cursor: pointer;
   font-weight: 600;
 }
@@ -708,7 +708,7 @@ hr {
 }
 .infoimages img{
   width: 100%;
-  height: 25rem;
+  height: 14rem;
 }
 .user-profile-img{
   position: absolute;
@@ -727,7 +727,13 @@ hr {
 .header-mobile-profile{
   display: none;
 }
-
+.follow-chat-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: #fff;
+}
 /* chat box  */
 
 .chat-container {
@@ -1067,7 +1073,7 @@ hr {
     padding: .5rem 1rem;
   }
   .infoimages img {
-    height: 10rem;
+    height: 14rem;
   }
   .left-sidebar-profileCard{
     padding: 1rem;
@@ -1154,7 +1160,7 @@ hr {
     width: 100%;
   }
   .infoimages img {
-    height: 10rem;
+    height: 13rem;
   }
   .friends h3{
     padding: 1rem;
@@ -1265,7 +1271,7 @@ hr {
     height: 92vh;
   }
   .infoimages img {
-    height: 8rem;
+    height: 12rem;
   }
   .profile-friendinfo{
     gap: 2rem;

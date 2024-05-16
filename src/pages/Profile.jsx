@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import Avatar from "react-avatar";
 import Post from "../components/Post";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { follow, getUserProfile, unfollow } from "../redux/UserNewSlice";
 import { getUserPosts } from "../redux/PostNewSlice";
+import { createChat } from "../redux/ChatSlice";
 
 const Profile = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const id = location.pathname.split("/")[2];
 
 	useEffect(() => {
@@ -35,6 +37,15 @@ const Profile = () => {
 			});
 		}
 	};
+
+	const chatHandler = (id) => {
+		dispatch(createChat({ senderId: user?._id, receiverId: id }));
+		setTimeout(() => {
+			navigate("/chat");
+			window.location.reload();
+		}, 300);
+	};
+
 	return (
 		<>
 			<section className='profile-page'>
@@ -77,13 +88,20 @@ const Profile = () => {
 								Edit Profile
 							</button>
 						) : (
-							<button
-								onClick={followUnfollowHandler}
-								className='edit-profile'>
-								{profile?.followers.includes(user?._id)
-									? "Following"
-									: "Follow"}
-							</button>
+							<div className='follow-chat-btn'>
+								<button
+									onClick={followUnfollowHandler}
+									className='edit-profile'>
+									{profile?.followers.includes(user?._id)
+										? "Following"
+										: "Follow"}
+								</button>
+								<button
+									onClick={() => chatHandler(profile?._id)}
+									className='edit-profile'>
+									Message
+								</button>
+							</div>
 						)}
 					</div>
 				</div>

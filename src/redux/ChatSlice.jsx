@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import { toast } from "react-toastify";
 import ChatService from "./ChatService";
 
 const initialState = {
@@ -10,6 +9,16 @@ const initialState = {
 	message: "",
 };
 
+export const createChat = createAsyncThunk(
+	"chat/create-chat",
+	async (data, thunkAPI) => {
+		try {
+			return await ChatService.createChat(data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	}
+);
 export const getChat = createAsyncThunk(
 	"chat/get-chat",
 	async (id, thunkAPI) => {
@@ -27,6 +36,22 @@ export const chatSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
+			.addCase(createChat.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(createChat.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.isSuccess = true;
+				state.createdChat = action.payload;
+				state.message = "Success";
+			})
+			.addCase(createChat.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.isSuccess = false;
+				state.message = action.error;
+			})
 			.addCase(getChat.pending, (state) => {
 				state.isLoading = true;
 			})
@@ -36,18 +61,12 @@ export const chatSlice = createSlice({
 				state.isSuccess = true;
 				state.chats = action.payload;
 				state.message = "Success";
-				// if (state.isSuccess === true) {
-				// 	toast.success("Account Created Successfully");
-				// }
 			})
 			.addCase(getChat.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.isSuccess = false;
 				state.message = action.error;
-				// if (state.isError === true) {
-				// 	toast.error(action.error);
-				// }
 			});
 	},
 });
