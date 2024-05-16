@@ -869,13 +869,14 @@ hr {
 
 .chat {
   width: 70%;
-  background: #fff;
+  background: var(--main-color);
 }
 .show-conversion{
   margin: 50px auto;
   text-align: center;
   font-size: 22px;
   font-weight: 600;
+  background: none;
 }
 .header-chat {
   background-color: #FFF;
@@ -1066,7 +1067,7 @@ hr {
     padding: .5rem 1rem;
   }
   .infoimages img {
-    height: 20rem;
+    height: 10rem;
   }
   .left-sidebar-profileCard{
     padding: 1rem;
@@ -1153,7 +1154,7 @@ hr {
     width: 100%;
   }
   .infoimages img {
-    height: 20rem;
+    height: 10rem;
   }
   .friends h3{
     padding: 1rem;
@@ -1264,8 +1265,7 @@ hr {
     height: 92vh;
   }
   .infoimages img {
-    /* width: 35rem; */
-    height: 15rem;
+    height: 8rem;
   }
   .profile-friendinfo{
     gap: 2rem;

@@ -44,6 +44,15 @@ const Chat = () => {
 		dispatch(getChat(user?._id));
 	}, [user?._id]);
 
+	const checkOnlineStatus = (chat) => {
+		const chatMember =
+			chat?.members?.sender?._id !== user?._id
+				? chat?.members?.sender?._id
+				: chat?.members?.receiver?._id;
+		const online = onlineUsers.find((user) => user.userId === chatMember);
+		return online ? true : false;
+	};
+
 	return (
 		<>
 			<div className='chat-container'>
@@ -68,6 +77,7 @@ const Chat = () => {
 									key={index}
 									onClick={() => setCurrentChat(chat)}>
 									<Conversion
+										online={checkOnlineStatus(chat)}
 										data={chat}
 										currentUserId={user?._id}
 									/>

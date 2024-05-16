@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/UserNewSlice";
 
 const Login = () => {
@@ -13,10 +13,13 @@ const Login = () => {
 	const loginhandler = (e) => {
 		e.preventDefault();
 		dispatch(loginUser({ email, password }));
+	};
+	const user = useSelector((state) => state.auth);
+	if (user?.isSuccess) {
 		setTimeout(() => {
 			navigate("/");
 		}, 600);
-	};
+	}
 	return (
 		<>
 			<section>

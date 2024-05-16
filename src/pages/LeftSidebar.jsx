@@ -10,27 +10,21 @@ import { HiShoppingBag } from "react-icons/hi2";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { USER_API_END_POINT } from "../utils/constant";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const LeftSidebar = () => {
 	const user = useSelector((state) => state.auth?.user?.user);
 
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 
-	const logoutHandler = async () => {
-		try {
-			const res = await axios.get(`${USER_API_END_POINT}/logout`);
-			if (res.data.success) {
-				toast.success(res.data.message);
-			}
+	const logoutHandler = () => {
+		setTimeout(() => {
 			navigate("/login");
-		} catch (error) {
-			toast.error(error.response.data.message);
-			console.log(error);
+		}, 600);
+		localStorage.clear();
+		if (res.data.success) {
+			toast.success(res.data.message);
 		}
 	};
 
