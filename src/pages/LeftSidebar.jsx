@@ -2,11 +2,8 @@ import React from "react";
 import Avatar from "react-avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegUserCircle, FaUserFriends } from "react-icons/fa";
-import { FaNewspaper } from "react-icons/fa6";
 import { CgFeed } from "react-icons/cg";
-import { RiArticleFill } from "react-icons/ri";
-import { BiSolidVideos } from "react-icons/bi";
-import { HiShoppingBag } from "react-icons/hi2";
+import { RiLockPasswordFill } from "react-icons/ri";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
@@ -61,7 +58,7 @@ const LeftSidebar = () => {
 						/>
 						<h3>Profile</h3>
 					</Link>
-					<Link to='/' className='sidebar-menu-item'>
+					<Link to='/friends' className='sidebar-menu-item'>
 						<FaUserFriends
 							className='sidebar-menu-icon'
 							size={25}
@@ -69,53 +66,31 @@ const LeftSidebar = () => {
 						<h3>Friends</h3>
 					</Link>
 					<Link to='/' className='sidebar-menu-item'>
-						<FaNewspaper className='sidebar-menu-icon' size={25} />
-						<h3>News</h3>
-					</Link>
-					<Link to='/' className='sidebar-menu-item'>
 						<CgFeed className='sidebar-menu-icon' size={25} />
 						<h3>Feeds</h3>
 					</Link>
-					<Link
-						to='https://moneyfeever.com'
-						className='sidebar-menu-item'>
-						<RiArticleFill
-							className='sidebar-menu-icon'
-							size={25}
-						/>
-						<h3>Blog Posts</h3>
-					</Link>
-					<Link
-						to='https://youtube.com'
-						className='sidebar-menu-item'>
-						<BiSolidVideos
-							className='sidebar-menu-icon'
-							size={25}
-						/>
-						<h3>Watch Videos</h3>
-					</Link>
-					<Link to='https://evtn.org' className='sidebar-menu-item'>
-						<HiShoppingBag
-							className='sidebar-menu-icon'
-							size={25}
-						/>
-						<h3>Marketplace</h3>
-					</Link>
-					<Link to='/' className='sidebar-menu-item'>
+					<Link to='/help-support' className='sidebar-menu-item'>
 						<BsPatchQuestionFill
 							className='sidebar-menu-icon'
 							size={25}
 						/>
-						<h3>Have a Question</h3>
+						<h3>Help & Support</h3>
 					</Link>
-					<Link
-						to='mailto:contact@dheeru.org'
-						className='sidebar-menu-item'>
+					<Link to='/ask-for-feature' className='sidebar-menu-item'>
 						<MdOutlineFeaturedVideo
 							className='sidebar-menu-icon'
 							size={25}
 						/>
 						<h3>Ask for a Feature</h3>
+					</Link>
+					<Link
+						to='/request-password-reset'
+						className='sidebar-menu-item'>
+						<RiLockPasswordFill
+							className='sidebar-menu-icon'
+							size={25}
+						/>
+						<h3>Resest Password</h3>
 					</Link>
 					<Link
 						to='/'

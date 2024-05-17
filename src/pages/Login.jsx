@@ -52,7 +52,7 @@ const Login = () => {
 							/>
 							<label htmlFor='rememberme'>Remember Me</label>
 						</div>
-						<a href='#'>Forget password</a>
+						<a href='/request-password-reset'>Forget password</a>
 					</div>
 					<button type='submit'>Log In</button>
 					<div className='no-account'>

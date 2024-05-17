@@ -515,8 +515,13 @@ input[type=file]::file-selector-button:hover {
   box-shadow: 0 0 40px rgba(8,7,16,0.6);
   padding: 50px 35px;
 }
+.reset-password{
+  height: 460px !important;
+}
+.reset-link-form{
+  height: 360px !important;
+}
 .login-form *{
-  font-family: 'Poppins',sans-serif;
   color: #000;
   letter-spacing: 0.5px;
   outline: none;
@@ -1004,6 +1009,218 @@ hr {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
+
+/* Support page start here */
+
+.support-container {
+	background-color: #fff;
+	position: relative;
+	overflow: hidden;
+	max-width: 100%;
+	min-height: 480px;
+  min-width:370px;
+}
+
+.support-container h2 {
+  font-size:2rem;
+  margin-bottom:1rem;
+}
+
+.left-container {
+  flex:1;
+  height:480px;
+  background-color:#00b4cf;
+}
+.right-container {
+  display:flex;
+  flex:1;
+  padding-top: 50px;
+  justify-content:center;
+  align-items:center;
+  background: #fff;
+}
+.right-container form{
+  background: #fff;
+}
+.left-container {
+  display:flex;
+  flex:1;
+  height:300px;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+}
+
+.left-container p {
+  font-size:18px;
+}
+
+.right-inner-container {
+  width:90%;
+  text-align:center;
+  background: #fff;
+  padding: 0 30px;
+}
+
+.left-inner-container {
+  height:30%;
+  width:80%;
+  text-align:center;
+  line-height:22px;
+  background: none;
+}
+.left-inner-container h2, p{
+  background: none;
+}
+.right-inner-container form input, textarea {
+	background-color: #fff;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+  font-size:0.8rem;
+  border: 0.5px solid black;
+  border-radius: 5px;
+}
+
+.right-inner-container form input:focus, textarea:focus{
+  outline:1px solid #00b4cf;
+}
+
+.right-inner-container form button {
+	border-radius: 20px;
+	border: 1px solid #00b4cf;
+	background-color: var(--secondary-color);
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+  cursor:pointer;
+}
+
+.right-inner-container form button:hover {
+  opacity:0.7;
+}
+@media only screen and (max-width: 600px) {
+  .left-container{
+    display: none;
+  }
+  .lg-view {
+    display:none;  
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .sm-view {
+    display:none;  
+  }
+}
+
+.right-inner-container form form p {
+  text-align:left;
+}
+
+/* Ask for Feature Page Start here */
+.feature-container h2{
+  background: #fff;
+  margin-bottom: 20px;
+}
+.feature-form{
+  margin-bottom: 20px;
+}
+.touch .send__row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.touch .send__column {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 50%;
+  flex: 1 1 50%;
+}
+.touch .send__label {
+  color: #696969;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 30px 0 15px 15px;
+}
+.touch .send__label span {
+  color: #f6744b;
+}
+.touch .send__input {
+  margin: 0 15px 45px 15px;
+}
+.touch .send__input input {
+  width: 100%;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #cacaca;
+  font-size: 20px;
+  color: #696969;
+  font-family: 'Roboto', sans-serif;
+}
+.touch .send__text {
+  margin: 0 15px 60px 15px;
+}
+.touch .send__text .send__label {
+  margin: 0 0 15px 0;
+}
+.touch .send__text textarea {
+  resize: none;
+  width: 100%;
+  height: 75px;
+  border: none;
+  border-bottom: 1px solid #cacaca;
+  font-size: 20px;
+  color: #696969;
+  font-family: 'Roboto', sans-serif;
+}
+.touch .send button {
+  display: block;
+  width: 203px;
+  height: 51px;
+  background-color: #f6744b;
+  border: none;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  margin: 0 auto 0 auto;
+}
+/* friends page start here */
+
+.friends-container{
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  
+}
+.friends-line{
+  width: 0.5px;
+}
+.friends-container h2{
+  background: none;
+}
+.followers-section, .following-section{
+  background: none;
+  margin-top: 30px;
+}
+.follower-profile{
+  display: flex;
+  gap: 20px;
+  background: none;
+  margin: 20px auto;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
 
 @media only screen and (max-width: 1650px) and (min-width: 1270px){
   .header-search input{

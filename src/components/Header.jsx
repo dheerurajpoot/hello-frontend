@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
 import { FaFacebookMessenger } from "react-icons/fa";
-import { BiSolidVideos } from "react-icons/bi";
+import { FaUserFriends } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { CgMenuGridO } from "react-icons/cg";
-import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { FaHome } from "react-icons/fa";
 import Drawer from "react-modern-drawer";
@@ -18,6 +17,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { getAllUsers } from "../redux/UserNewSlice";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 const Header = () => {
 	const user = useSelector((state) => state?.auth?.user?.user);
@@ -112,10 +112,12 @@ const Header = () => {
 							</div>
 						</Link>
 						<div className='menu-icons'>
-							<BiSolidVideos
-								className='header-menu-icon'
-								size={25}
-							/>
+							<Link to={"/friends"}>
+								<FaUserFriends
+									className='header-menu-icon'
+									size={25}
+								/>
+							</Link>
 						</div>
 						<div className='menu-icons'>
 							<Link to={"/chat"}>
@@ -195,6 +197,15 @@ const Header = () => {
 									to='mailto:contact@dheeru.org'
 									className='sidebar-menu-item'>
 									<MdOutlineFeaturedVideo
+										className='sidebar-menu-icon'
+										size={25}
+									/>
+									<h3>Ask for a Feature</h3>
+								</Link>
+								<Link
+									to='/request-password-reset'
+									className='sidebar-menu-item'>
+									<RiLockPasswordFill
 										className='sidebar-menu-icon'
 										size={25}
 									/>
