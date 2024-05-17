@@ -186,15 +186,26 @@ const Header = () => {
 									/>
 									<h3>Profile</h3>
 								</Link>
-								<Link to='/' className='sidebar-menu-item'>
+								<Link
+									to={`/friends`}
+									className='sidebar-menu-item'>
+									<FaUserFriends
+										className='sidebar-menu-icon'
+										size={25}
+									/>
+									<h3>Friends</h3>
+								</Link>
+								<Link
+									to='/help-support'
+									className='sidebar-menu-item'>
 									<BsPatchQuestionFill
 										className='sidebar-menu-icon'
 										size={25}
 									/>
-									<h3>Have a Question</h3>
+									<h3>Help & Support</h3>
 								</Link>
 								<Link
-									to='mailto:contact@dheeru.org'
+									to='/ask-for-feature'
 									className='sidebar-menu-item'>
 									<MdOutlineFeaturedVideo
 										className='sidebar-menu-icon'
@@ -209,7 +220,7 @@ const Header = () => {
 										className='sidebar-menu-icon'
 										size={25}
 									/>
-									<h3>Ask for a Feature</h3>
+									<h3>Reset Password</h3>
 								</Link>
 								<Link
 									to='/'

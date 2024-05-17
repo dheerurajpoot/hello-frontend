@@ -519,7 +519,10 @@ input[type=file]::file-selector-button:hover {
   height: 460px !important;
 }
 .reset-link-form{
-  height: 360px !important;
+  height: 390px !important;
+}
+.reset-link-form p{
+  text-align: center;
 }
 .login-form *{
   color: #000;
@@ -1199,7 +1202,7 @@ hr {
 .friends-container{
   background: #fff;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   
 }
 .friends-line{
@@ -1211,12 +1214,20 @@ hr {
 .followers-section, .following-section{
   background: none;
   margin-top: 30px;
+  padding: 0 10px;
+  overflow: scroll;
+}
+.followers-section::-webkit-scrollbar{
+  display: none;
+}
+.following-section::-webkit-scrollbar {
+  display: none;
 }
 .follower-profile{
   display: flex;
   gap: 20px;
   background: none;
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 15px 20px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -1436,7 +1447,7 @@ hr {
     position: absolute;
     width: 100%;
     background: #fff;
-    gap: 1rem;
+    gap: 1.5rem;
     padding: .5rem 0;
     left: 0;
     bottom: 0;
@@ -1531,5 +1542,30 @@ hr {
   }
   .img-preview img{
     height: 200px;
+  }
+  .friends-container{
+    flex-direction: column;
+  }
+  .reset-link-form{
+    position: fixed;
+  }
+  .chat-container{
+    max-width: 440px;
+    min-width: 360px;
+  }
+  .chat-sections{
+    width: 100%;
+  }
+  .discussions{
+    width: 100%;
+    box-shadow: none;
+  }
+  .chat{
+    display: none;
+  }
+}
+@media only screen and (max-width: 450px) and (min-width: 360px) {
+  .post-main{
+    margin: 0 0;
   }
 }

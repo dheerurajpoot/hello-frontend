@@ -27,7 +27,10 @@ const ResetPasswordLink = () => {
 					onSubmit={handleSubmit}
 					className='login-form reset-link-form'>
 					<h3>Login Here</h3>
-
+					<p>
+						Enter your registered email address, we will send you a
+						password reset link to your registered email address.
+					</p>
 					<label htmlFor='email'>Email:</label>
 					<input
 						type='email'
