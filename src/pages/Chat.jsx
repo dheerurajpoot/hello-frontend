@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { IoSearchSharp } from "react-icons/io5";
-import { IoArrowBack } from "react-icons/io5";
+import { IoSearchSharp, IoArrowBack } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { getChat } from "../redux/ChatSlice";
 import Conversion from "../components/Conversion";
 import ChatBox from "../components/ChatBox";
 import { Link } from "react-router-dom";
 import { io } from "socket.io-client";
+import { useMediaQuery } from "react-responsive";
 
 const Chat = () => {
 	const dispatch = useDispatch();
@@ -15,11 +15,15 @@ const Chat = () => {
 	const [onlineUsers, setOnlineUsers] = useState([]);
 	const [sendMessage, setSendMessage] = useState(null);
 	const [receiveMessage, setReceiveMessage] = useState(null);
+	const [isChatBoxVisible, setIsChatBoxVisible] = useState(false);
 
 	const user = useSelector((state) => state.auth?.user?.user);
 	const AllChats = useSelector((state) => state.chats?.chats);
 
 	const chats = [...AllChats].reverse();
+
+	// Responsive breakpoint for mobile view
+	const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
 	// send messages to the socket server
 	useEffect(() => {
@@ -42,6 +46,7 @@ const Chat = () => {
 			setReceiveMessage(data);
 		});
 	}, []);
+
 	useEffect(() => {
 		dispatch(getChat(user?._id));
 	}, [user?._id]);
@@ -62,43 +67,61 @@ const Chat = () => {
 		return online ? true : false;
 	};
 
+	const handleConversationClick = (chat) => {
+		setCurrentChat(chat);
+		if (isMobile) {
+			setIsChatBoxVisible(true);
+		}
+	};
+
+	const handleBackClick = () => {
+		setIsChatBoxVisible(false);
+	};
+
 	return (
 		<>
 			<div className='chat-container'>
 				<div className='chat-sections'>
-					<section className='discussions'>
-						<div className='discussion search'>
-							<div className='backtofeed'>
-								<Link to={-1}>
-									<IoArrowBack size={25} />
-								</Link>
-							</div>
-							<div className='searchbar'>
-								<IoSearchSharp size={25} />
-								<input
-									type='text'
-									placeholder='Search...'></input>
-							</div>
-						</div>
-						{chats?.map((chat, index) => {
-							return (
-								<div
-									key={index}
-									onClick={() => setCurrentChat(chat)}>
-									<Conversion
-										online={checkOnlineStatus(chat)}
-										data={chat}
-										currentUserId={user?._id}
-									/>
+					{(!isMobile || !isChatBoxVisible) && (
+						<section className='discussions'>
+							<div className='discussion search'>
+								<div className='backtofeed'>
+									<Link to={-1}>
+										<IoArrowBack size={25} />
+									</Link>
 								</div>
-							);
-						})}
-					</section>
-					<ChatBox
-						chat={currentChat}
-						setSendMessage={setSendMessage}
-						receiveMessage={receiveMessage}
-					/>
+								<div className='searchbar'>
+									<IoSearchSharp size={25} />
+									<input
+										type='text'
+										placeholder='Search...'></input>
+								</div>
+							</div>
+							{chats?.map((chat, index) => {
+								return (
+									<div
+										key={index}
+										onClick={() =>
+											handleConversationClick(chat)
+										}>
+										<Conversion
+											online={checkOnlineStatus(chat)}
+											data={chat}
+											currentUserId={user?._id}
+										/>
+									</div>
+								);
+							})}
+						</section>
+					)}
+					{(!isMobile || isChatBoxVisible) && (
+						<ChatBox
+							chat={currentChat}
+							setSendMessage={setSendMessage}
+							receiveMessage={receiveMessage}
+							handleBackClick={handleBackClick}
+						/>
+					)}
 				</div>
 			</div>
 		</>

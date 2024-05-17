@@ -5,8 +5,9 @@ import { FaEllipsisH } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages, sendMessages } from "../redux/MessageSlice";
 import { format } from "timeago.js";
+import { IoArrowBack } from "react-icons/io5";
 
-const ChatBox = ({ chat, setSendMessage, receiveMessage }) => {
+const ChatBox = ({ chat, setSendMessage, receiveMessage, handleBackClick }) => {
 	const [msg, setMsg] = useState("");
 	const [userMsg, setUserMsg] = useState(null);
 	const scroll = useRef();
@@ -60,6 +61,13 @@ const ChatBox = ({ chat, setSendMessage, receiveMessage }) => {
 			{chat && chat ? (
 				<div>
 					<div className='header-chat'>
+						{handleBackClick && (
+							<div
+								className='back-button'
+								onClick={handleBackClick}>
+								<IoArrowBack size={25} />
+							</div>
+						)}
 						<FaUser className='icon' />
 						<p className='name'>
 							{chat?.members?.receiver?._id !== user?._id

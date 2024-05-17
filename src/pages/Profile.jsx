@@ -109,8 +109,7 @@ const Profile = () => {
 					{profilePosts && profilePosts.length === 0 ? (
 						<div className='no-posts'>
 							<p>
-								You didn't' posted Anything{" "}
-								<Link to={"/"}>Create Post</Link>
+								{profile?.name} didn't' posted Anything here!{" "}
 							</p>
 						</div>
 					) : (
