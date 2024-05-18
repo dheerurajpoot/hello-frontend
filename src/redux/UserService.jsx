@@ -74,10 +74,26 @@ const getUserProfile = async (id) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.error("Error in getting suggested users :", error);
+		console.error("Error in getting user Profile :", error);
 		throw error;
 	}
 };
+const updateUserProfile = async (data) => {
+	try {
+		const response = await axios.put(
+			`${USER_API_END_POINT}/update-profile/${data?.id}`,
+			data,
+			{
+				withCredentials: true,
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error in updating user profile :", error);
+		throw error;
+	}
+};
+
 const follow = async (data) => {
 	try {
 		const response = await axios.post(
@@ -115,6 +131,7 @@ const userService = {
 	getAllUsers,
 	getSuggestedUser,
 	getUserProfile,
+	updateUserProfile,
 	follow,
 	unfollow,
 };

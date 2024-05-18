@@ -64,6 +64,18 @@ export const getUserProfile = createAsyncThunk(
 		}
 	}
 );
+
+export const updateUserProfile = createAsyncThunk(
+	"auth/updated-profile",
+	async (data, thunkAPI) => {
+		try {
+			return await userService.updateUserProfile(data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	}
+);
+
 export const follow = createAsyncThunk(
 	"auth/follow",
 	async (data, thunkAPI) => {
@@ -182,6 +194,28 @@ export const userSlice = createSlice({
 				state.isError = true;
 				state.isSuccess = false;
 				state.message = action.error;
+			})
+			.addCase(updateUserProfile.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(updateUserProfile.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isError = false;
+				state.isSuccess = true;
+				state.user = action.payload;
+				state.message = "Success";
+				if (state.isSuccess === true) {
+					toast.success("Profile Updated Successfully");
+				}
+			})
+			.addCase(updateUserProfile.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.isSuccess = false;
+				state.message = action.error;
+				if (state.isError === true) {
+					toast.error(action?.payload?.response?.data?.message);
+				}
 			})
 			.addCase(follow.pending, (state) => {
 				state.isLoading = true;

@@ -54,7 +54,11 @@ const Profile = () => {
 						<img src='./../../images/hello-cover.jpg' alt='Cover' />
 						<div className='user-profile-img'>
 							<Avatar
-								src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+								src={
+									profile?.profilePic && profile?.profilePic
+										? profile?.profilePic
+										: "./images/favicon.ico"
+								}
 								size='300'
 								round={true}
 							/>
@@ -64,7 +68,7 @@ const Profile = () => {
 						<span>{profile?.name}</span>
 						<a
 							href={`/profile/${profile?.username}`}>{`@${profile?.username}`}</a>
-						{/* <span>Web Developer</span> */}
+						<span>{profile?.userDescription}</span>
 					</div>
 					<div className='followerinfo'>
 						<div className='profile-friendinfo'>
@@ -84,9 +88,11 @@ const Profile = () => {
 							</div>
 						</div>
 						{profile?._id === user?._id ? (
-							<button className='edit-profile'>
-								Edit Profile
-							</button>
+							<Link to={`/update-profile/${profile?._id}`}>
+								<button className='edit-profile'>
+									Edit Profile
+								</button>
+							</Link>
 						) : (
 							<div className='follow-chat-btn'>
 								<button

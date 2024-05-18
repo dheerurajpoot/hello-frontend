@@ -13,6 +13,7 @@ import ResetPassword from "./pages/ResetPassword";
 import AskForFeature from "./pages/AskForFeature";
 import HelpSupport from "./pages/HelpSupport";
 import Friends from "./pages/Friends";
+import UpdateUserProfile from "./pages/UpdateUserProfile";
 
 const AppRoutes = () => {
 	return (
@@ -32,6 +33,14 @@ const AppRoutes = () => {
 							element={
 								<PrivateRoute>
 									<Profile />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path='update-profile/:id'
+							element={
+								<PrivateRoute>
+									<UpdateUserProfile />
 								</PrivateRoute>
 							}
 						/>
