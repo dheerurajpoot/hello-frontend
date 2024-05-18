@@ -19,32 +19,20 @@ const Post = ({ post }) => {
 			dispatch(getUserPosts());
 		});
 	};
-	// delete post
+
 	const deletePostHandler = async (id) => {
 		dispatch(deleteUserPost(id)).then(() => {
 			dispatch(getUserPosts());
 		});
 	};
 
-	// post sharing
-	const sharePostHandler = () => {
-		if (navigator.share) {
-			navigator
-				.share({
-					title: "Check out this post",
-					text: post.description,
-					url: window.location.href,
-				})
-				.then(() => console.log("Shared successfully"))
-				.catch((error) => console.error("Error sharing:", error));
-		} else {
-			alert("Sharing is not supported in this browser.");
-		}
-	};
-
-	// post 3 dot menu
+	// Post 3-dot menu
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef(null);
+
+	// Share menu
+	const [isShareOpen, setIsShareOpen] = useState(false);
+	const shareDropdownRef = useRef(null);
 
 	useEffect(() => {
 		const handleClickOutside = (event) => {
@@ -53,6 +41,12 @@ const Post = ({ post }) => {
 				!dropdownRef.current.contains(event.target)
 			) {
 				setIsOpen(false);
+			}
+			if (
+				shareDropdownRef.current &&
+				!shareDropdownRef.current.contains(event.target)
+			) {
+				setIsShareOpen(false);
 			}
 		};
 
@@ -65,6 +59,37 @@ const Post = ({ post }) => {
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
+	};
+
+	const toggleShareMenu = () => {
+		setIsShareOpen(!isShareOpen);
+	};
+
+	const generateShareUrl = (platform, postId, description) => {
+		const baseUrl = window.location.href.split("?")[0]; // Base URL of the current page
+		const postUrl = `${baseUrl}?post=${postId}`; // Construct post URL
+		const postText = description;
+
+		switch (platform) {
+			case "facebook":
+				return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+					postUrl
+				)}`;
+			case "whatsapp":
+				return `https://api.whatsapp.com/send?text=${encodeURIComponent(
+					postText
+				)}%20${encodeURIComponent(postUrl)}`;
+			case "linkedin":
+				return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+					postUrl
+				)}`;
+			case "telegram":
+				return `https://t.me/share/url?url=${encodeURIComponent(
+					postUrl
+				)}&text=${encodeURIComponent(postText)}`;
+			default:
+				return "#";
+		}
 	};
 
 	return (
@@ -147,10 +172,61 @@ const Post = ({ post }) => {
 							/>
 							Comment
 						</p>
-						<p onClick={sharePostHandler}>
-							<FaShare className='interaction-icons' size={22} />{" "}
-							Share
-						</p>
+						<div
+							className='dropdown-container'
+							ref={shareDropdownRef}>
+							<p onClick={toggleShareMenu}>
+								<FaShare
+									className='interaction-icons'
+									size={22}
+								/>{" "}
+								Share
+							</p>
+							{isShareOpen && (
+								<div className='dropdown-menu'>
+									<a
+										href={generateShareUrl(
+											"facebook",
+											post?._id,
+											post?.description
+										)}
+										target='_blank'
+										rel='noopener noreferrer'>
+										Facebook
+									</a>
+									<a
+										href={generateShareUrl(
+											"whatsapp",
+											post?._id,
+											post?.description
+										)}
+										target='_blank'
+										rel='noopener noreferrer'>
+										WhatsApp
+									</a>
+									<a
+										href={generateShareUrl(
+											"linkedin",
+											post?._id,
+											post?.description
+										)}
+										target='_blank'
+										rel='noopener noreferrer'>
+										LinkedIn
+									</a>
+									<a
+										href={generateShareUrl(
+											"telegram",
+											post?._id,
+											post?.description
+										)}
+										target='_blank'
+										rel='noopener noreferrer'>
+										Telegram
+									</a>
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
