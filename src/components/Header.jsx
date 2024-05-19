@@ -18,6 +18,7 @@ import { BsPatchQuestionFill } from "react-icons/bs";
 import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { getAllUsers } from "../redux/UserNewSlice";
 import { RiLockPasswordFill } from "react-icons/ri";
+import defaultImg from "../../public/images/default.png";
 
 const Header = () => {
 	const user = useSelector((state) => state?.auth?.user?.user);
@@ -137,7 +138,11 @@ const Header = () => {
 							to={`/profile/${user?._id}`}
 							className='header-profile'>
 							<Avatar
-								src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+								src={
+									user?.profilePic
+										? user?.profilePic
+										: defaultImg
+								}
 								size='40'
 								round={true}
 							/>

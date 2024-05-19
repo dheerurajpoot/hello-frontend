@@ -4,6 +4,7 @@ import Avatar from "react-avatar";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from "../utils/constant";
+import defaultImg from "../../public/images/default.png";
 
 const Friends = () => {
 	const [user, setUser] = useState(null);
@@ -41,7 +42,11 @@ const Friends = () => {
 								<div key={index} className='follower-profile'>
 									<div className='sidebar-profile-img'>
 										<Avatar
-											src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+											src={
+												follower?.profilePic
+													? follower?.profilePic
+													: defaultImg
+											}
 											size='50'
 											round={true}
 										/>
@@ -69,7 +74,11 @@ const Friends = () => {
 								<div key={index} className='follower-profile'>
 									<div className='sidebar-profile-img'>
 										<Avatar
-											src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+											src={
+												following?.profilePic
+													? following?.profilePic
+													: defaultImg
+											}
 											size='50'
 											round={true}
 										/>

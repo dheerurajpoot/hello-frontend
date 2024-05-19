@@ -7,6 +7,7 @@ import { createPost, getUserPosts } from "../redux/PostNewSlice";
 import { CiImageOn } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
+import defaultImg from "../../public/images/default.png";
 
 const Main = () => {
 	const [description, setDescription] = useState("");
@@ -66,7 +67,11 @@ const Main = () => {
 								to={`/profile/${user?._id}`}
 								className='sidebar-profile-img'>
 								<Avatar
-									src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+									src={
+										user?.profilePic
+											? user?.profilePic
+											: defaultImg
+									}
 									size='50'
 									round={true}
 								/>

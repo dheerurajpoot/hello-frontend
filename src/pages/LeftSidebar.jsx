@@ -9,6 +9,7 @@ import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import defaultImg from "../../public/images/default.png";
 
 const LeftSidebar = () => {
 	const user = useSelector((state) => state.auth?.user?.user);
@@ -33,7 +34,11 @@ const LeftSidebar = () => {
 						<div className='sidebar-profile-img'>
 							<Avatar
 								className='left-sidebar-profile-icon'
-								src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+								src={
+									user?.profilePic
+										? user?.profilePic
+										: defaultImg
+								}
 								size='50'
 								round={true}
 							/>

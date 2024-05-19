@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postTiming } from "../utils/constant";
 import { CiMenuKebab } from "react-icons/ci";
 import { deleteUserPost, getUserPosts, postLike } from "../redux/PostNewSlice";
+import defaultImg from "../../public/images/default.png";
 
 const Post = ({ post }) => {
 	const dispatch = useDispatch();
@@ -101,7 +102,11 @@ const Post = ({ post }) => {
 							to={`/profile/${post?.userID}`}
 							className='post-profile'>
 							<Avatar
-								src='https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png'
+								src={
+									post?.userDetails[0]?.profilePic
+										? post?.userDetails[0]?.profilePic
+										: defaultImg
+								}
 								size='40'
 								round={true}
 							/>
