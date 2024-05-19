@@ -14,7 +14,6 @@ const Conversion = ({ data, online }) => {
 			setChat(data?.members?.receiver);
 		}
 	}, [user?._id]);
-	console.log(chat);
 	return (
 		<div className='discussion'>
 			<div className='photo'>

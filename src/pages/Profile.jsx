@@ -6,7 +6,7 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 import { follow, getUserProfile, unfollow } from "../redux/UserNewSlice";
 import { getUserPosts } from "../redux/PostNewSlice";
 import { createChat } from "../redux/ChatSlice";
-import defaultImg from "../../public/images/default.png";
+import defaultImg from "/images/default.png";
 
 const Profile = () => {
 	const dispatch = useDispatch();
