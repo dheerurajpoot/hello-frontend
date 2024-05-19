@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
@@ -17,7 +17,17 @@ const UpdateUserProfile = () => {
 	const navigate = useNavigate();
 	const user = useSelector((state) => state.auth?.user?.user);
 
+	useEffect(() => {
+		if (user) {
+			setName(user.name || "");
+			setUserName(user.username || "");
+			setEmail(user.email || "");
+			setBio(user.userDescription || "");
+		}
+	}, [user]);
+
 	const uploadFile = async () => {
+		if (!image) return null;
 		const data = new FormData();
 		data.append("file", image);
 		data.append("upload_preset", "images-preset");

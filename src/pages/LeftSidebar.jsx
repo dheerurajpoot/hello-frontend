@@ -9,7 +9,7 @@ import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import defaultImg from "../../public/images/default.png";
+import defaultImg from "/images/default.png";
 
 const LeftSidebar = () => {
 	const user = useSelector((state) => state.auth?.user?.user);

@@ -638,14 +638,16 @@ background: rgba(255,255,255,0.13);
   text-transform: capitalize;
 }
 .profileinfo>span:nth-of-type(2){
-  margin: 1rem 0;
+  margin: 1rem 4rem;
   font-size: 1.1rem;
 }
 .profileinfo a{
   text-decoration: none;
   color: var(--secondary-color);
 }
-
+.account-mail{
+  color: var(--secondary-color);
+}
 .followerinfo {
   text-align: center;
   background-color: #fff;
@@ -717,6 +719,7 @@ hr {
 .infoimages img{
   width: 100%;
   height: 14rem;
+  object-fit: cover;
 }
 .user-profile-img{
   position: absolute;
@@ -834,7 +837,11 @@ hr {
     background-size: cover;
     background-repeat: no-repeat;
 }
-
+.discussions .discussion .photo img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 .online {
   position: relative;
   top: 30px;
@@ -1011,7 +1018,9 @@ hr {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
-
+.back-button{
+  display: none;
+}
 
 /* Support page start here */
 
@@ -1623,6 +1632,9 @@ hr {
   .profileinfo>span:nth-of-type(1){
     font-size: 1.1rem;
   }
+  .profileinfo>span:nth-of-type(2){
+    margin: 1rem 2rem;
+  }
   .profile-posts h2{
     font-size: 20px;
   }
@@ -1663,6 +1675,25 @@ hr {
   }
   .footer-chat{
     height: 70px;
+  }
+  .chat .messages-chat .text{
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 5px;
+  }
+  .text-only{
+    margin: 0;
+  }
+  .chat-time{
+    margin-left: 0;
+  }
+  .response-time{
+    margin-right: 0!important;
+  }
+  .followers-section, .following-section{
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 10px;
   }
 }
 @media only screen and (max-width: 450px) and (min-width: 360px) {

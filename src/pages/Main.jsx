@@ -7,7 +7,7 @@ import { createPost, getUserPosts } from "../redux/PostNewSlice";
 import { CiImageOn } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
-import defaultImg from "../../public/images/default.png";
+import defaultImg from "/images/default.png";
 
 const Main = () => {
 	const [description, setDescription] = useState("");

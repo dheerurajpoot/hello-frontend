@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from "react-avatar";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import defaultImg from "../../public/images/default.png";
+import defaultImg from "/images/default.png";
 
 const RightSidebar = ({ otherUsers }) => {
 	const loggedUser = useSelector((state) => state?.auth?.user?.user);

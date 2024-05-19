@@ -18,7 +18,7 @@ import { BsPatchQuestionFill } from "react-icons/bs";
 import { MdOutlineFeaturedVideo } from "react-icons/md";
 import { getAllUsers } from "../redux/UserNewSlice";
 import { RiLockPasswordFill } from "react-icons/ri";
-import defaultImg from "../../public/images/default.png";
+import defaultImg from "/images/default.png";
 
 const Header = () => {
 	const user = useSelector((state) => state?.auth?.user?.user);

@@ -70,6 +70,13 @@ const Profile = () => {
 						<a
 							href={`/profile/${profile?.username}`}>{`@${profile?.username}`}</a>
 						<span>{profile?.userDescription}</span>
+						{profile?._id === user?._id ? (
+							<span className='account-mail'>
+								Account Email: {profile?.email}
+							</span>
+						) : (
+							""
+						)}
 					</div>
 					<div className='followerinfo'>
 						<div className='profile-friendinfo'>

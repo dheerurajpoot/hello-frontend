@@ -4,7 +4,7 @@ import Avatar from "react-avatar";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from "../utils/constant";
-import defaultImg from "../../public/images/default.png";
+import defaultImg from "/images/default.png";
 
 const Friends = () => {
 	const [user, setUser] = useState(null);

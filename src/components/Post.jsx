@@ -8,12 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { postTiming } from "../utils/constant";
 import { CiMenuKebab } from "react-icons/ci";
 import { deleteUserPost, getUserPosts, postLike } from "../redux/PostNewSlice";
-import defaultImg from "../../public/images/default.png";
+import defaultImg from "/images/default.png";
 
 const Post = ({ post }) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state?.auth?.user?.user);
-	const profile = useSelector((state) => state?.auth?.profile?.user);
 
 	const likeHandler = async (id) => {
 		dispatch(postLike({ id, userId: user?._id })).then(() => {

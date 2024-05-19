@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import defaultImg from "/images/default.png";
 
 const Conversion = ({ data, online }) => {
 	const [chat, setChat] = useState({});
@@ -13,10 +14,14 @@ const Conversion = ({ data, online }) => {
 			setChat(data?.members?.receiver);
 		}
 	}, [user?._id]);
-
+	console.log(chat);
 	return (
 		<div className='discussion'>
 			<div className='photo'>
+				<img
+					src={chat?.profilePic ? chat?.profilePic : defaultImg}
+					alt=''
+				/>
 				{online && online ? <div className='online'></div> : ""}
 			</div>
 			<div className='desc-contact'>
